@@ -16,7 +16,7 @@ GREEN = (0, 255, 0)
 
 evett = False
 
-speed = 0.4
+speed = 0.6
 snakeX = [1]
 snakeY = [3]
 MovX = 1
@@ -33,6 +33,15 @@ while True:
     if FOOD == 0:
         food = [random.randint(1, 6), random.randint(1, 6)]
         FOOD = 1
+
+
+    # eat food +1 score + 1 new snake element
+    if snakeX[0] == food[0] and snakeY[0] == food[1]:
+        FOOD = 0
+        SCORE = SCORE + 1
+        INVINCIBLE = len(snakeX)
+        snakeX.append(food[0])
+        snakeY.append(food[1])
 
     for i in range(len(snakeX)):
         if snakeX[i] == food[0] and snakeY[i] == food[1]:
@@ -54,18 +63,9 @@ while True:
             if snakeX[0] == snakeX[i] and snakeY[0] == snakeY[i]:
                 GAME_OVER = 1
 
-    INVINCIBLE = 0
-    if snakeX[0] == food[0] and snakeY[0] == food[1]:
-        evett = True
-
-    # eat food +1 score + 1 new snake element
-    if evett:
-        print("eat")
-        FOOD = 0
-        SCORE = SCORE + 1
-        INVINCIBLE = 1
-        snakeX.append(snakeX[-1])
-        snakeY.append(snakeY[-1])
+    if INVINCIBLE > 0:
+        INVINCIBLE = INVINCIBLE - 1
+ 
 
     for event in sense.stick.get_events():
         if event.action == 'pressed':
@@ -82,17 +82,19 @@ while True:
                 MovX = 1
                 MovY = 0
 
-    snakeX[0] += MovX
-    snakeY[0] += MovY
-
     # move snake
     for i in range(len(snakeX) - 1, 0, -1):
         snakeX[i] = snakeX[i - 1]
         snakeY[i] = snakeY[i - 1]
 
-    print("snakeX: " + str(snakeX[0]) + " snakeY: " + str(snakeY[0]))
-    print("foodX: " + str(food[0]) + " foodY: " + str(food[1]))
-    print("")
+
+    snakeX[0] += MovX
+    snakeY[0] += MovY
+    
+    print('X: ' + str(snakeX) + ' Y: ' + str(snakeY) + ' Food: ' + str(food[0]) + ' ' + str(food[1]))
+    print('FOOD:' , FOOD)
+    print('')
+
     # show movement and food
     sense.clear()
     sense.set_pixel(food[0], food[1], RED)
