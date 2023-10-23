@@ -18,8 +18,8 @@ args = vars(ap.parse_args())
 # define the lower and upper boundaries of the "green"
 # ball in the HSV color space, then initialize the
 # list of tracked points
-redLower = (142, 192, 109)
-redUpper = (219, 255, 255)
+greenLower = (29, 86, 6)
+greenUpper = (64, 255, 255)
 pts = deque(maxlen=args["buffer"])
 # if a video path was not supplied, grab the reference
 # to the webcam
@@ -49,7 +49,7 @@ while True:
     # construct a mask for the color "green", then perform
     # a series of dilations and erosions to remove any small
     # blobs left in the mask
-    mask = cv2.inRange(hsv, redLower, redUpper)
+    mask = cv2.inRange(hsv, greenLower, greenUpper)
     mask = cv2.erode(mask, None, iterations=2)
     mask = cv2.dilate(mask, None, iterations=2)
 
@@ -85,8 +85,7 @@ while True:
             continue
         # otherwise, compute the thickness of the line and
         # draw the connecting lines
-        thickness = int(
-            np.sqrt(args["buffer"] / float((len(pts)-i) + 1)) * 2.5)
+        thickness = int(np.sqrt(args["buffer"] / float(i + 1)) * 2.5)
         cv2.line(frame, pts[i - 1], pts[i], (0, 0, 255), thickness)
     # show the frame to our screen
     cv2.imshow("Frame", frame)
