@@ -34,3 +34,6 @@ for (i, idx) in enumerate(idxs):
 
         print("{}. label: {}, probability: {:.5}".format(
             i + 1, classes[idx], preds[0][idx]))
+
+cv2.imshow("Label", image)
+cv2.waitKey(0)

@@ -1,7 +1,7 @@
 from pyzbar import pyzbar
 import cv2
 
-image_path = "/home/noel/beagyazott_rendszerek/labor/lab8_feladat/barcode.png"
+image_path = "./barcode.png"
 image = cv2.imread(image_path)
 barcodes = pyzbar.decode(image)
 
@@ -17,3 +17,6 @@ for barcode in barcodes:
     text = "{} ({})".format(barcodeData, barcodeType)
     cv2.putText(image, text, (x, y - 10),
                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
+
+    cv2.imshow("Barcode Scanner", image)
+    key = cv2.waitKey(0)

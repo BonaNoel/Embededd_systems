@@ -18,8 +18,8 @@ args = vars(ap.parse_args())
 # define the lower and upper boundaries of the "green"
 # ball in the HSV color space, then initialize the
 # list of tracked points
-redLower = (142, 192, 109)
-redUpper = (219, 255, 255)
+redLower = (163, 172, 125)
+redUpper = (207, 255, 255)
 pts = deque(maxlen=args["buffer"])
 # if a video path was not supplied, grab the reference
 # to the webcam
